@@ -4,7 +4,7 @@
 
 Fabric Code is a memory-first coding harness, built on top of the Letta memory API. Instead of working in independent sessions, you work with a persisted agent that learns over time and is portable across models (Claude Sonnet/Opus, GPT-5, Gemini 3 Pro, GLM-4.6, and more).
 
-> **Note:** Fabric Code is a fork of [Letta Code](https://github.com/letta-ai/letta-code) maintained by Fabric Pro. It uses the Letta memory backend for persistent agent state.
+> **Note:** Fabric Code is maintained by Fabric Pro. It uses the Letta memory backend for persistent agent state.
 
 ![](https://github.com/Fabric-Pro/fabric-code/blob/main/assets/fabric-code-demo.gif)
 
@@ -46,6 +46,20 @@ Over time, the agent will update its memory as it learns. To actively guide your
 Fabric Code works with skills (reusable modules that teach your agent new capabilities in a \`.skills\` directory), but additionally supports skill learning. You can ask your agent to learn a skill from its current trajectory with the command:
 ```bash
 > /skill [optional instructions on what skill to learn]
+```
+
+## Development
+
+For information on building, testing, and contributing to Fabric Code, see the [Development Guide](docs/development.md).
+
+For a deep dive into how Fabric Code works internally, including component architecture, data flows, and the relationship with Letta, see the [Architecture Documentation](docs/architecture.md).
+
+```bash
+# Quick start for developers
+git clone https://github.com/Fabric-Pro/fabric-code.git
+cd fabric-code
+bun install
+bun run dev
 ```
 
 ## Upstream Compatibility
