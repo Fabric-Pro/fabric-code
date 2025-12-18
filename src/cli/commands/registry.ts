@@ -60,7 +60,7 @@ export const commands: Record<string, Command> = {
     },
   },
   "/link": {
-    desc: "Attach all Letta Code tools to agent (deprecated, use /toolset instead)",
+    desc: "Attach all Fabric Code tools to agent (deprecated, use /toolset instead)",
     hidden: true,
     handler: () => {
       // Handled specially in App.tsx to access agent ID and client
@@ -68,7 +68,7 @@ export const commands: Record<string, Command> = {
     },
   },
   "/unlink": {
-    desc: "Remove all Letta Code tools from agent (deprecated, use /toolset instead)",
+    desc: "Remove all Fabric Code tools from agent (deprecated, use /toolset instead)",
     hidden: true,
     handler: () => {
       // Handled specially in App.tsx to access agent ID and client

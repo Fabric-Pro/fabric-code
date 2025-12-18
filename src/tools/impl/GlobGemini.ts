@@ -1,9 +1,9 @@
 /**
- * Gemini CLI glob tool - wrapper around Letta Code's Glob tool
+ * Gemini CLI glob tool - wrapper around Fabric Code's Glob tool
  * Uses Gemini's exact schema and description
  */
 
-import { glob as lettaGlob } from "./Glob";
+import { glob as fabricGlob } from "./Glob";
 
 interface GlobGeminiArgs {
   pattern: string;
@@ -16,13 +16,13 @@ interface GlobGeminiArgs {
 export async function glob_gemini(
   args: GlobGeminiArgs,
 ): Promise<{ message: string }> {
-  // Adapt Gemini params to Letta Code's Glob tool
-  const lettaArgs = {
+  // Adapt Gemini params to Fabric Code's Glob tool
+  const fabricArgs = {
     pattern: args.pattern,
     path: args.dir_path,
   };
 
-  const result = await lettaGlob(lettaArgs);
+  const result = await fabricGlob(fabricArgs);
 
   // Glob returns { files: string[], truncated?, totalFiles? }
   const message = result.files.join("\n");

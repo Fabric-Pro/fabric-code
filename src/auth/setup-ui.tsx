@@ -36,7 +36,7 @@ export function SetupUI({ onComplete }: SetupUIProps) {
           setSelectedOption((prev) => Math.min(2, prev + 1));
         } else if (key.return) {
           if (selectedOption === 0) {
-            // Login to Letta Cloud - start device code flow
+            // Login to Letta Developer Platform - start device code flow
             setMode("device-code");
             startDeviceCodeFlow();
           } else if (selectedOption === 1) {
@@ -108,7 +108,7 @@ export function SetupUI({ onComplete }: SetupUIProps) {
     return (
       <Box flexDirection="column" padding={1}>
         <Text color="green">✓ Setup complete!</Text>
-        <Text dimColor>Starting Letta Code...</Text>
+        <Text dimColor>Starting Fabric Code...</Text>
       </Box>
     );
   }
@@ -147,7 +147,7 @@ export function SetupUI({ onComplete }: SetupUIProps) {
   return (
     <Box flexDirection="column" padding={1}>
       <Text color={colors.welcome.accent}>{asciiLogo}</Text>
-      <Text bold>Welcome to Letta Code!</Text>
+      <Text bold>Welcome to Fabric Code!</Text>
       <Text> </Text>
       <Text>Let's get you authenticated:</Text>
       <Text> </Text>

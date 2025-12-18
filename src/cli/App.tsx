@@ -1705,7 +1705,7 @@ export default function App({
               id: cmdId,
               input: msg,
               output:
-                "✓ Logged out successfully. Run 'letta' to re-authenticate.",
+                "✓ Logged out successfully. Run 'fabric' to re-authenticate.",
               phase: "finished",
               success: true,
             });
@@ -2094,14 +2094,14 @@ export default function App({
           return { submitted: true };
         }
 
-        // Special handling for /link command - attach all Letta Code tools (deprecated)
+        // Special handling for /link command - attach all Fabric Code tools (deprecated)
         if (msg.trim() === "/link" || msg.trim().startsWith("/link ")) {
           const cmdId = uid("cmd");
           buffersRef.current.byId.set(cmdId, {
             kind: "command",
             id: cmdId,
             input: msg,
-            output: "Attaching Letta Code tools...",
+            output: "Attaching Fabric Code tools...",
             phase: "running",
           });
           buffersRef.current.order.push(cmdId);
@@ -2139,14 +2139,14 @@ export default function App({
           return { submitted: true };
         }
 
-        // Special handling for /unlink command - remove all Letta Code tools (deprecated)
+        // Special handling for /unlink command - remove all Fabric Code tools (deprecated)
         if (msg.trim() === "/unlink" || msg.trim().startsWith("/unlink ")) {
           const cmdId = uid("cmd");
           buffersRef.current.byId.set(cmdId, {
             kind: "command",
             id: cmdId,
             input: msg,
-            output: "Removing Letta Code tools...",
+            output: "Removing Fabric Code tools...",
             phase: "running",
           });
           buffersRef.current.order.push(cmdId);
@@ -2581,7 +2581,7 @@ ${recentCommits}
           // Unlock input
           setCommandRunning(false);
         }
-        return { submitted: true }; // Don't send commands to Letta agent
+        return { submitted: true }; // Don't send commands to agent
       }
 
       // Build message content from display value (handles placeholders for text/images)

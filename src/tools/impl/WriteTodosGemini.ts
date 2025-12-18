@@ -1,5 +1,5 @@
 /**
- * Gemini CLI write_todos tool - adapter for Letta Code's todo_write
+ * Gemini CLI write_todos tool - adapter for Fabric Code's todo_write
  * Uses Gemini's exact schema and description but adapts the params
  */
 
@@ -13,8 +13,8 @@ interface WriteTodosGeminiArgs {
 export async function write_todos(
   args: WriteTodosGeminiArgs,
 ): Promise<{ message: string; todos: typeof args.todos }> {
-  // Gemini uses "description" field, Letta Code uses "content" field
-  // Convert to Letta format and validate
+  // Gemini uses "description" field, Fabric Code uses "content" field
+  // Convert to Fabric format and validate
   if (!Array.isArray(args.todos)) {
     throw new Error("todos must be an array");
   }

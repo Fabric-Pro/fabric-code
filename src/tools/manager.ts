@@ -203,7 +203,7 @@ type ToolRegistry = Map<string, ToolDefinition>;
 
 // Use globalThis to ensure singleton across bundle
 // This prevents Bun's bundler from creating duplicate instances of the registry
-const REGISTRY_KEY = Symbol.for("@letta/toolRegistry");
+const REGISTRY_KEY = Symbol.for("@fabric/toolRegistry");
 
 type GlobalWithRegistry = typeof globalThis & {
   [key: symbol]: ToolRegistry;
@@ -622,7 +622,7 @@ export async function upsertToolsToServer(client: Letta): Promise<void> {
       ) {
         throw new Error(
           `Authentication failed. Please check your LETTA_API_KEY.\n` +
-            `Run 'rm ~/.letta/settings.json' and restart to re-authenticate.\n` +
+            `Run 'rm ~/.fabric/settings.json' and restart to re-authenticate.\n` +
             `Original error: ${error.message}`,
         );
       }
@@ -919,10 +919,10 @@ export function getToolNames(): string[] {
 }
 
 /**
- * Returns all Letta Code tool names known to this build, regardless of what is currently loaded.
+ * Returns all Fabric Code tool names known to this build, regardless of what is currently loaded.
  * Useful for unlinking/removing tools when switching providers/models.
  */
-export function getAllLettaToolNames(): string[] {
+export function getAllFabricToolNames(): string[] {
   return [...TOOL_NAMES];
 }
 

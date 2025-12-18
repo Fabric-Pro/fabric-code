@@ -1,5 +1,5 @@
 /**
- * Gemini CLI list_directory tool - wrapper around Letta Code's LS tool
+ * Gemini CLI list_directory tool - wrapper around Fabric Code's LS tool
  * Uses Gemini's exact schema and description
  */
 
@@ -17,13 +17,13 @@ interface ListDirectoryGeminiArgs {
 export async function list_directory(
   args: ListDirectoryGeminiArgs,
 ): Promise<{ message: string }> {
-  // Adapt Gemini params to Letta Code's LS tool
-  const lettaArgs = {
+  // Adapt Gemini params to Fabric Code's LS tool
+  const fabricArgs = {
     path: args.dir_path,
     ignore: args.ignore,
   };
 
-  const result = await ls(lettaArgs);
+  const result = await ls(fabricArgs);
 
   // LS returns { content: Array<{ type: string, text: string }> }
   // Convert to string message

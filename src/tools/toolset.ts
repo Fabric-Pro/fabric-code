@@ -33,14 +33,14 @@ export type ToolsetName =
   | "gemini_snake"
   | "none";
 
-// Server-side/base tools that should stay attached regardless of Letta toolset
+// Server-side/base tools that should stay attached regardless of Fabric toolset
 export const BASE_TOOL_NAMES = ["memory", "web_search"];
 
 /**
- * Gets the list of Letta Code tools currently attached to an agent.
+ * Gets the list of Fabric Code tools currently attached to an agent.
  * Returns the tool names that are both attached to the agent AND in our tool definitions.
  */
-export async function getAttachedLettaTools(
+export async function getAttachedFabricTools(
   client: Letta,
   agentId: string,
 ): Promise<string[]> {
@@ -53,8 +53,8 @@ export async function getAttachedLettaTools(
       ?.map((t) => t.name)
       .filter((name): name is string => typeof name === "string") || [];
 
-  // Get all possible Letta Code tool names
-  const allLettaTools: string[] = [
+  // Get all possible Fabric Code tool names
+  const allFabricTools: string[] = [
     ...CODEX_TOOLS,
     ...CODEX_SNAKE_TOOLS,
     ...ANTHROPIC_TOOLS,
@@ -63,18 +63,18 @@ export async function getAttachedLettaTools(
   ];
 
   // Return intersection: tools that are both attached AND in our definitions
-  return toolNames.filter((name) => allLettaTools.includes(name));
+  return toolNames.filter((name) => allFabricTools.includes(name));
 }
 
 /**
  * Detects which toolset is attached to an agent by examining its tools.
- * Returns the toolset name based on majority, or null if no Letta Code tools.
+ * Returns the toolset name based on majority, or null if no Fabric Code tools.
  */
 export async function detectToolsetFromAgent(
   client: Letta,
   agentId: string,
 ): Promise<ToolsetName | null> {
-  const attachedTools = await getAttachedLettaTools(client, agentId);
+  const attachedTools = await getAttachedFabricTools(client, agentId);
 
   if (attachedTools.length === 0) {
     return null;
@@ -150,7 +150,7 @@ export async function forceToolsetSwitch(
   const client = await getClient();
   await upsertToolsToServer(client);
 
-  // Remove old Letta tools and add new ones (or just remove if none)
+  // Remove old Fabric tools and add new ones (or just remove if none)
   await unlinkToolsFromAgent(agentId);
   if (toolsetName !== "none") {
     await linkToolsToAgent(agentId);
@@ -245,7 +245,7 @@ export async function switchToolsetForModel(
     // leaving the agent with only base tools attached.
     if (getToolNames().length === 0) {
       throw new Error(
-        `Failed to load any Letta tools for model "${resolvedModel}".`,
+        `Failed to load any Fabric tools for model "${resolvedModel}".`,
       );
     }
   }
@@ -254,7 +254,7 @@ export async function switchToolsetForModel(
   const client = await getClient();
   await upsertToolsToServer(client);
 
-  // Remove old Letta tools and add new ones
+  // Remove old Fabric tools and add new ones
   await unlinkToolsFromAgent(agentId);
   await linkToolsToAgent(agentId);
 

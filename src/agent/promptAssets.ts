@@ -5,9 +5,9 @@ import codexPrompt from "./prompts/codex.md";
 import geminiPrompt from "./prompts/gemini.md";
 import humanPrompt from "./prompts/human.mdx";
 import initializePrompt from "./prompts/init_memory.md";
-import lettaAnthropicPrompt from "./prompts/letta_claude.md";
-import lettaCodexPrompt from "./prompts/letta_codex.md";
-import lettaGeminiPrompt from "./prompts/letta_gemini.md";
+import fabricAnthropicPrompt from "./prompts/fabric_claude.md";
+import fabricCodexPrompt from "./prompts/fabric_codex.md";
+import fabricGeminiPrompt from "./prompts/fabric_gemini.md";
 import loadedSkillsPrompt from "./prompts/loaded_skills.mdx";
 import personaPrompt from "./prompts/persona.mdx";
 import personaClaudePrompt from "./prompts/persona_claude.mdx";
@@ -53,8 +53,8 @@ export const SYSTEM_PROMPTS: SystemPromptOption[] = [
   {
     id: "default",
     label: "Default",
-    description: "Standard Letta Code system prompt (Claude-optimized)",
-    content: lettaAnthropicPrompt,
+    description: "Standard Fabric Code system prompt (Claude-optimized)",
+    content: fabricAnthropicPrompt,
     isDefault: true,
     isFeatured: true,
   },
@@ -65,17 +65,17 @@ export const SYSTEM_PROMPTS: SystemPromptOption[] = [
     content: systemPrompt,
   },
   {
-    id: "letta-codex",
+    id: "fabric-codex",
     label: "Codex",
     description: "For Codex models",
-    content: lettaCodexPrompt,
+    content: fabricCodexPrompt,
     isFeatured: true,
   },
   {
-    id: "letta-gemini",
+    id: "fabric-gemini",
     label: "Gemini",
     description: "For Gemini models",
-    content: lettaGeminiPrompt,
+    content: fabricGeminiPrompt,
     isFeatured: true,
   },
   {

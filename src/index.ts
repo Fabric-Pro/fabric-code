@@ -13,19 +13,19 @@ import { loadTools, upsertToolsIfNeeded } from "./tools/manager";
 function printHelp() {
   // Keep this plaintext (no colors) so output pipes cleanly
   const usage = `
-Letta Code is a general purpose CLI for interacting with Letta agents
+Fabric Code is a general purpose CLI for interacting with AI agents
 
 USAGE
   # interactive TUI
-  letta                 Resume from profile or create new agent (shows selector)
-  letta --new           Create a new agent directly (skip profile selector)
-  letta --agent <id>    Open a specific agent by ID
+  fabric                 Resume from profile or create new agent (shows selector)
+  fabric --new           Create a new agent directly (skip profile selector)
+  fabric --agent <id>    Open a specific agent by ID
 
   # headless
-  letta -p "..."        One-off prompt in headless mode (no TTY UI)
+  fabric -p "..."        One-off prompt in headless mode (no TTY UI)
 
   # maintenance
-  letta update          Manually check for updates and install if available
+  fabric update          Manually check for updates and install if available
 
 OPTIONS
   -h, --help            Show this help and exit
@@ -45,23 +45,23 @@ OPTIONS
   --from-af <path>      Create agent from an AgentFile (.af) template
 
 BEHAVIOR
-  On startup, Letta Code checks for saved profiles:
+  On startup, Fabric Code checks for saved profiles:
   - If profiles exist, you'll be prompted to select one or create a new agent
   - Profiles can be "pinned" to specific projects for quick access
   - Use /profile save <name> to bookmark your current agent
 
   Profiles are stored in:
-  - Global: ~/.letta/settings.json (available everywhere)
-  - Local: .letta/settings.local.json (pinned to project)
+  - Global: ~/.fabric/settings.json (available everywhere)
+  - Local: .fabric/settings.local.json (pinned to project)
 
   If no credentials are configured, you'll be prompted to authenticate via
-  Letta Cloud OAuth on first run.
+  Letta Developer Platform OAuth on first run.
 
 EXAMPLES
   # when installed as an executable
-  letta                    # Show profile selector or create new
-  letta --new              # Create new agent directly
-  letta --agent agent_123  # Open specific agent
+  fabric                    # Show profile selector or create new
+  fabric --new              # Create new agent directly
+  fabric --agent agent_123  # Open specific agent
 
   # inside the interactive session
   /profile save MyAgent    # Save current agent as profile
@@ -71,7 +71,7 @@ EXAMPLES
   /logout                  # Clear credentials and exit
 
   # headless with JSON output (includes stats)
-  letta -p "hello" --output-format json
+  fabric -p "hello" --output-format json
 
 `.trim();
 
@@ -159,7 +159,7 @@ async function main() {
     } else {
       console.error(`Error: ${errorMsg}`);
     }
-    console.error("Run 'letta --help' for usage information.");
+    console.error("Run 'fabric --help' for usage information.");
     process.exit(1);
   }
 
@@ -175,7 +175,7 @@ async function main() {
   // Handle version flag
   if (values.version) {
     const { getVersion } = await import("./version");
-    console.log(`${getVersion()} (Letta Code)`);
+    console.log(`${getVersion()} (Fabric Code)`);
     process.exit(0);
   }
 
@@ -203,7 +203,7 @@ async function main() {
   // Fail if an unknown command/argument is passed (and we're not in headless mode where it might be a prompt)
   if (command && !isHeadless) {
     console.error(`Error: Unknown command or argument "${command}"`);
-    console.error("Run 'letta --help' for usage information.");
+    console.error("Run 'fabric --help' for usage information.");
     process.exit(1);
   }
 
@@ -335,7 +335,7 @@ async function main() {
     if (isHeadless) {
       console.error("Missing LETTA_API_KEY");
       console.error(
-        "Run 'letta' in interactive mode to authenticate or export the missing environment variable",
+        "Run 'fabric' in interactive mode to authenticate or export the missing environment variable",
       );
       process.exit(1);
     }
@@ -355,19 +355,19 @@ async function main() {
   if (!isValid) {
     // For headless mode, error out with helpful message
     if (isHeadless) {
-      console.error("Failed to connect to Letta server");
+      console.error("Failed to connect to server");
       console.error(`Base URL: ${baseURL}`);
       console.error(
         "Your credentials may be invalid or the server may be unreachable.",
       );
       console.error(
-        "Delete ~/.letta/settings.json then run 'letta' to re-authenticate",
+        "Delete ~/.fabric/settings.json then run 'fabric' to re-authenticate",
       );
       process.exit(1);
     }
 
     // For interactive mode, show setup flow
-    console.log("Failed to connect to Letta server.");
+    console.log("Failed to connect to server.");
     console.log(`Base URL: ${baseURL}\n`);
     console.log(
       "Your credentials may be invalid or the server may be unreachable.",
@@ -563,9 +563,9 @@ async function main() {
         // Otherwise, load a full toolset based on model/toolset preference
         if (resumingAgentId && !toolset) {
           try {
-            const { getAttachedLettaTools } = await import("./tools/toolset");
+            const { getAttachedFabricTools } = await import("./tools/toolset");
             const { loadSpecificTools } = await import("./tools/manager");
-            const attachedTools = await getAttachedLettaTools(
+            const attachedTools = await getAttachedFabricTools(
               client,
               resumingAgentId,
             );
@@ -573,7 +573,7 @@ async function main() {
               // Load only the specific tools attached to this agent
               await loadSpecificTools(attachedTools);
             } else {
-              // No Letta Code tools attached, load default based on model
+              // No Fabric Code tools attached, load default based on model
               const modelForTools = getModelForToolLoading(model, undefined);
               await loadTools(modelForTools);
             }
@@ -647,7 +647,7 @@ async function main() {
             console.error(
               "When using --agent, the specified agent ID must exist.",
             );
-            console.error("Run 'letta' without --agent to create a new agent.");
+            console.error("Run 'fabric' without --agent to create a new agent.");
             process.exit(1);
           }
         }
@@ -671,7 +671,7 @@ async function main() {
           setAgentProvenance(result.provenance);
         }
 
-        // Priority 4: Try to resume from project settings LRU (.letta/settings.local.json)
+        // Priority 4: Try to resume from project settings LRU (.fabric/settings.local.json)
         if (!agent) {
           await settingsManager.loadLocalProjectSettings();
           const localProjectSettings =

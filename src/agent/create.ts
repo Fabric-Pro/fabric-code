@@ -1,5 +1,5 @@
 /**
- * Utilities for creating an agent on the Letta API backend
+ * Utilities for creating an agent on the Letta memory backend
  **/
 
 import { join } from "node:path";
@@ -45,7 +45,7 @@ export interface CreateAgentResult {
 }
 
 export async function createAgent(
-  name = "letta-code-agent",
+  name = "fabric-code-agent",
   model?: string,
   embeddingModel = "openai/text-embedding-3-small",
   updateArgs?: Record<string, unknown>,
@@ -209,13 +209,13 @@ export async function createAgent(
     agent_type: "letta_v1_agent" as AgentType,
     system: resolvedSystemPrompt,
     name,
-    description: `Letta Code agent created in ${process.cwd()}`,
+    description: `Fabric Code agent created in ${process.cwd()}`,
     embedding: embeddingModel,
     model: modelHandle,
     context_window_limit: contextWindow,
     tools: toolNames,
     block_ids: blockIds,
-    tags: ["origin:letta-code"],
+    tags: ["origin:fabric-code"],
     // should be default off, but just in case
     include_base_tools: false,
     include_base_tool_rules: false,

@@ -600,7 +600,7 @@ export function Input({
             <Text dimColor>Press / for commands or @ for files</Text>
           )}
           <Text dimColor>
-            {`Letta Code v${appVersion} [${currentModel ?? "unknown"}]`}
+            {`Fabric Code v${appVersion} [${currentModel ?? "unknown"}]`}
           </Text>
         </Box>
       </Box>

@@ -2,7 +2,7 @@
  * Task tool implementation
  *
  * Spawns specialized subagents to handle complex, multi-step tasks autonomously.
- * Supports both built-in subagent types and custom subagents defined in .letta/agents/.
+ * Supports both built-in subagent types and custom subagents defined in .fabric/agents/.
  */
 
 import { getAllSubagentConfigs } from "../../agent/subagents";

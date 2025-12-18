@@ -35,7 +35,7 @@ export async function getClient() {
         apiKey = tokens.access_token;
       } catch (error) {
         console.error("Failed to refresh access token:", error);
-        console.error("Please run 'letta login' to re-authenticate");
+        console.error("Please run 'fabric login' to re-authenticate");
         process.exit(1);
       }
     }
@@ -50,7 +50,7 @@ export async function getClient() {
   if (!apiKey && baseURL === LETTA_CLOUD_API_URL) {
     console.error("Missing LETTA_API_KEY");
     console.error(
-      "Run 'letta setup' to configure authentication or set your LETTA_API_KEY environment variable",
+      "Run 'fabric setup' to configure authentication or set your LETTA_API_KEY environment variable",
     );
     process.exit(1);
   }
@@ -59,8 +59,8 @@ export async function getClient() {
     apiKey,
     baseURL,
     defaultHeaders: {
-      "X-Letta-Source": "letta-code",
-      "User-Agent": `letta-code/${packageJson.version}`,
+      "X-Letta-Source": "fabric-code",
+      "User-Agent": `fabric-code/${packageJson.version}`,
     },
   });
 }

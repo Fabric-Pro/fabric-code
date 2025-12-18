@@ -16,7 +16,7 @@ describe("tool truncation integration tests", () => {
 
   beforeEach(async () => {
     // Create a temporary directory for tests
-    testDir = await mkdtemp(join(tmpdir(), "letta-test-"));
+    testDir = await mkdtemp(join(tmpdir(), "fabric-test-"));
     // Save and set USER_CWD so tools operate within the temp dir
     originalUserCwd = process.env.USER_CWD;
     process.env.USER_CWD = testDir;

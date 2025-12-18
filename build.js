@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 
 /**
- * Build script for Letta Code CLI
+ * Build script for Fabric Code CLI
  * Bundles TypeScript source into a single JavaScript file
  */
 
@@ -16,7 +16,7 @@ const __dirname = dirname(__filename);
 const pkg = JSON.parse(readFileSync(join(__dirname, "package.json"), "utf-8"));
 const version = pkg.version;
 
-console.log(`📦 Building Letta Code v${version}...`);
+console.log(`📦 Building Fabric Code v${version}...`);
 
 await Bun.build({
   entrypoints: ["./src/index.ts"],
@@ -26,10 +26,10 @@ await Bun.build({
   minify: false, // Keep readable for debugging
   sourcemap: "external",
   naming: {
-    entry: "letta.js",
+    entry: "fabric.js",
   },
   define: {
-    "process.env.LETTA_VERSION": JSON.stringify(version),
+    "process.env.FABRIC_VERSION": JSON.stringify(version),
   },
   // Load text files as strings (for markdown, etc.)
   loader: {
@@ -40,7 +40,7 @@ await Bun.build({
 });
 
 // Add shebang to output file
-const outputPath = join(__dirname, "letta.js");
+const outputPath = join(__dirname, "fabric.js");
 let content = readFileSync(outputPath, "utf-8");
 
 // Remove any existing shebang first
@@ -52,10 +52,10 @@ const withShebang = `#!/usr/bin/env node\n${content}`;
 await Bun.write(outputPath, withShebang);
 
 // Make executable
-await Bun.$`chmod +x letta.js`;
+await Bun.$`chmod +x fabric.js`;
 
 console.log("✅ Build complete!");
-console.log(`   Output: letta.js`);
+console.log(`   Output: fabric.js`);
 console.log(
   `   Size: ${((await Bun.file(outputPath).size) / 1024).toFixed(0)}KB`,
 );

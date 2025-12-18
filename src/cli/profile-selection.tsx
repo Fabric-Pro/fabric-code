@@ -174,9 +174,9 @@ function ProfileSelectionUI({
     }
   });
 
-  const hasLocalDir = settingsManager.hasLocalLettaDir();
+  const hasLocalDir = settingsManager.hasLocalFabricDir();
   const contextMessage = hasLocalDir
-    ? "Existing `.letta` folder detected."
+    ? "Existing `.fabric` folder detected."
     : `${options.length} agent profile${options.length !== 1 ? "s" : ""} detected.`;
 
   return (

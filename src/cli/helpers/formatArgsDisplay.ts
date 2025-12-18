@@ -1,5 +1,5 @@
 // Utility to format tool argument JSON strings into a concise display label
-// Copied from old letta-code repo to preserve exact formatting behavior
+// Copied from old fabric-code repo to preserve exact formatting behavior
 
 // Small helpers
 const isRecord = (v: unknown): v is Record<string, unknown> =>

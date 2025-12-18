@@ -9,8 +9,8 @@ export type PermissionMode =
 
 // Use globalThis to ensure singleton across bundle
 // This prevents Bun's bundler from creating duplicate instances of the mode manager
-const MODE_KEY = Symbol.for("@letta/permissionMode");
-const PLAN_FILE_KEY = Symbol.for("@letta/planFilePath");
+const MODE_KEY = Symbol.for("@fabric/permissionMode");
+const PLAN_FILE_KEY = Symbol.for("@fabric/planFilePath");
 
 type GlobalWithMode = typeof globalThis & {
   [MODE_KEY]: PermissionMode;

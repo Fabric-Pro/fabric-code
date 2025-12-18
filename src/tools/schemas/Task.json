@@ -3,7 +3,7 @@
   "properties": {
     "subagent_type": {
       "type": "string",
-      "description": "The type of specialized agent to use. Available agents are discovered from .letta/agents/ directory."
+      "description": "The type of specialized agent to use. Available agents are discovered from .fabric/agents/ directory."
     },
     "prompt": {
       "type": "string",

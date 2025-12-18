@@ -27,7 +27,7 @@ async function checkForUpdate(): Promise<UpdateCheckResult> {
 
   try {
     const { stdout } = await execAsync(
-      "npm view @letta-ai/letta-code version",
+      "npm view @fabric-pro/fabric-code version",
       { timeout: 5000 },
     );
     const latestVersion = stdout.trim();
@@ -51,7 +51,7 @@ async function checkForUpdate(): Promise<UpdateCheckResult> {
 
 async function performUpdate(): Promise<{ success: boolean; error?: string }> {
   try {
-    await execAsync("npm install -g @letta-ai/letta-code@latest", {
+    await execAsync("npm install -g @fabric-pro/fabric-code@latest", {
       timeout: 60000,
     });
     return { success: true };
@@ -104,7 +104,7 @@ export async function manualUpdate(): Promise<{
   if (updateResult.success) {
     return {
       success: true,
-      message: `Updated to ${result.latestVersion}. Restart Letta Code to use the new version.`,
+      message: `Updated to ${result.latestVersion}. Restart Fabric Code to use the new version.`,
     };
   }
 

@@ -1,5 +1,5 @@
 /**
- * Letta Code Color System
+ * Fabric Code Color System
  *
  * This file defines all colors used in the application.
  * No colors should be hardcoded in components - all should reference this file.

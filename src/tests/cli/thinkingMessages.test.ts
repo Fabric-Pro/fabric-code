@@ -3,11 +3,11 @@ import { getRandomThinkingMessage } from "../../cli/helpers/thinkingMessages";
 
 describe("Thinking messages", () => {
   test("returns formatted message with agent name", () => {
-    const message = getRandomThinkingMessage("Letta");
+    const message = getRandomThinkingMessage("Fabric");
 
-    // Should be in format "Letta is <verb>ing"
-    expect(message).toMatch(/^Letta is \w+$/);
-    expect(message.startsWith("Letta is ")).toBe(true);
+    // Should be in format "Fabric is <verb>ing"
+    expect(message).toMatch(/^Fabric is \w+$/);
+    expect(message.startsWith("Fabric is ")).toBe(true);
   });
 
   test("returns capitalized verb without agent name", () => {

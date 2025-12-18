@@ -95,7 +95,7 @@ export function getAgentStatusHints(
       .map((b) => b.label);
 
     // New blocks - categorize by where they'll be stored
-    // (project blocks → .letta/, others → ~/.letta/)
+    // (project blocks → .fabric/, others → ~/.fabric/)
     const newBlocks = agentProvenance.blocks.filter((b) => b.source === "new");
     const newGlobalBlocks = newBlocks
       .filter((b) => !isProjectBlock(b.label))
@@ -106,22 +106,22 @@ export function getAgentStatusHints(
 
     if (reusedGlobalBlocks.length > 0) {
       hints.push(
-        `→ Reusing from global (~/.letta/): ${reusedGlobalBlocks.join(", ")}`,
+        `→ Reusing from global (~/.fabric/): ${reusedGlobalBlocks.join(", ")}`,
       );
     }
     if (newGlobalBlocks.length > 0) {
       hints.push(
-        `→ Created in global (~/.letta/): ${newGlobalBlocks.join(", ")}`,
+        `→ Created in global (~/.fabric/): ${newGlobalBlocks.join(", ")}`,
       );
     }
     if (reusedProjectBlocks.length > 0) {
       hints.push(
-        `→ Reusing from project (.letta/): ${reusedProjectBlocks.join(", ")}`,
+        `→ Reusing from project (.fabric/): ${reusedProjectBlocks.join(", ")}`,
       );
     }
     if (newProjectBlocks.length > 0) {
       hints.push(
-        `→ Created in project (.letta/): ${newProjectBlocks.join(", ")}`,
+        `→ Created in project (.fabric/): ${newProjectBlocks.join(", ")}`,
       );
     }
   }
@@ -175,9 +175,9 @@ export function WelcomeScreen({
 
       {/* Right column: Text info */}
       <Box flexDirection="column" marginTop={0}>
-        {/* Row 1: Letta Code + version */}
+        {/* Row 1: Fabric Code + version */}
         <Box>
-          <Text bold>Letta Code</Text>
+          <Text bold>Fabric Code</Text>
           <Text color="gray"> v{version}</Text>
         </Box>
         {/* Row 2: model · auth (or just auth while loading) */}

@@ -94,15 +94,15 @@ jobs:
         run: bun run build
 
       - name: Smoke test - help
-        run: ./letta.js --help
+        run: ./fabric.js --help
 
       - name: Smoke test - version
-        run: ./letta.js --version || echo "Version flag not implemented yet"
+        run: ./fabric.js --version || echo "Version flag not implemented yet"
 
       - name: Integration smoke test (real API)
         env:
           LETTA_API_KEY: ${{ secrets.LETTA_API_KEY }}
-        run: ./letta.js --prompt "ping" --tools "" --permission-mode plan
+        run: ./fabric.js --prompt "ping" --tools "" --permission-mode plan
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -111,9 +111,9 @@ jobs:
           name: Release ${{ steps.version.outputs.tag }}
           body: |
             Release ${{ steps.version.outputs.tag }}
-            
+
             Changes from ${{ steps.version.outputs.old_version }} to ${{ steps.version.outputs.new_version }}
-          files: letta.js
+          files: fabric.js
           fail_on_unmatched_files: true
 
       - name: Publish to npm

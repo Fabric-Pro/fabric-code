@@ -103,7 +103,7 @@ const toolsets: ToolsetOption[] = [
   {
     id: "none",
     label: "None (Disable Tools)",
-    description: "Remove all Letta Code tools from the agent",
+    description: "Remove all Fabric Code tools from the agent",
     tools: [],
     isFeatured: true,
   },

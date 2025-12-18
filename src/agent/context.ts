@@ -11,7 +11,7 @@ interface AgentContext {
 
 // Use globalThis to ensure singleton across bundle
 // This prevents Bun's bundler from creating duplicate instances of the context
-const CONTEXT_KEY = Symbol.for("@letta/agentContext");
+const CONTEXT_KEY = Symbol.for("@fabric/agentContext");
 
 type GlobalWithContext = typeof globalThis & {
   [key: symbol]: AgentContext;

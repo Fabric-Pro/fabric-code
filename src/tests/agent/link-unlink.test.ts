@@ -25,7 +25,7 @@ describeOrSkip("Link/Unlink Tools", () => {
 
     client = new Letta({
       apiKey,
-      defaultHeaders: { "X-Letta-Source": "letta-code" },
+      defaultHeaders: { "X-Letta-Source": "fabric-code" },
     });
 
     const agent = await client.agents.create({
@@ -52,7 +52,7 @@ describeOrSkip("Link/Unlink Tools", () => {
     }
   });
 
-  test("linkToolsToAgent attaches all Letta Code tools", async () => {
+  test("linkToolsToAgent attaches all Fabric Code tools", async () => {
     // Reset: ensure tools are not already attached
     await unlinkToolsFromAgent(testAgentId);
 
@@ -66,9 +66,9 @@ describeOrSkip("Link/Unlink Tools", () => {
       include: ["agent.tools"],
     });
     const toolNames = agent.tools?.map((t) => t.name) || [];
-    const lettaCodeTools = getToolNames();
+    const fabricCodeTools = getToolNames();
 
-    for (const toolName of lettaCodeTools) {
+    for (const toolName of fabricCodeTools) {
       expect(toolNames).toContain(toolName);
     }
   }, 30000);
@@ -88,12 +88,12 @@ describeOrSkip("Link/Unlink Tools", () => {
       (rule) => rule.type === "requires_approval",
     );
 
-    const lettaCodeTools = getToolNames();
-    expect(approvalRules?.length).toBe(lettaCodeTools.length);
+    const fabricCodeTools = getToolNames();
+    expect(approvalRules?.length).toBe(fabricCodeTools.length);
 
-    // Check all Letta Code tools have approval rules
+    // Check all Fabric Code tools have approval rules
     const rulesToolNames = approvalRules?.map((r) => r.tool_name) || [];
-    for (const toolName of lettaCodeTools) {
+    for (const toolName of fabricCodeTools) {
       expect(rulesToolNames).toContain(toolName);
     }
   }, 30000);
@@ -111,7 +111,7 @@ describeOrSkip("Link/Unlink Tools", () => {
     expect(result.message).toContain("already attached");
   }, 30000);
 
-  test("unlinkToolsFromAgent removes all Letta Code tools", async () => {
+  test("unlinkToolsFromAgent removes all Fabric Code tools", async () => {
     // First link tools
     await linkToolsToAgent(testAgentId);
 
@@ -126,9 +126,9 @@ describeOrSkip("Link/Unlink Tools", () => {
       include: ["agent.tools"],
     });
     const toolNames = agent.tools?.map((t) => t.name) || [];
-    const lettaCodeTools = getToolNames();
+    const fabricCodeTools = getToolNames();
 
-    for (const toolName of lettaCodeTools) {
+    for (const toolName of fabricCodeTools) {
       expect(toolNames).not.toContain(toolName);
     }
   }, 30000);
@@ -148,16 +148,16 @@ describeOrSkip("Link/Unlink Tools", () => {
       (rule) => rule.type === "requires_approval",
     );
 
-    const lettaCodeTools = new Set(getToolNames());
+    const fabricCodeTools = new Set(getToolNames());
     const remainingApprovalRules = approvalRules?.filter((r) =>
-      lettaCodeTools.has(r.tool_name),
+      fabricCodeTools.has(r.tool_name),
     );
 
     expect(remainingApprovalRules?.length || 0).toBe(0);
   }, 30000);
 
-  test("unlinkToolsFromAgent preserves non-Letta-Code tools", async () => {
-    // Link Letta Code tools
+  test("unlinkToolsFromAgent preserves non-Fabric-Code tools", async () => {
+    // Link Fabric Code tools
     await linkToolsToAgent(testAgentId);
 
     // Attach memory tool
@@ -169,7 +169,7 @@ describeOrSkip("Link/Unlink Tools", () => {
       });
     }
 
-    // Unlink Letta Code tools
+    // Unlink Fabric Code tools
     await unlinkToolsFromAgent(testAgentId);
 
     // Verify memory tool is still there
@@ -180,9 +180,9 @@ describeOrSkip("Link/Unlink Tools", () => {
 
     expect(toolNames).toContain("memory");
 
-    // Verify Letta Code tools are gone
-    const lettaCodeTools = getToolNames();
-    for (const toolName of lettaCodeTools) {
+    // Verify Fabric Code tools are gone
+    const fabricCodeTools = getToolNames();
+    for (const toolName of fabricCodeTools) {
       expect(toolNames).not.toContain(toolName);
     }
   }, 30000);
@@ -206,7 +206,7 @@ describeOrSkip("Link/Unlink Tools", () => {
 
     await client.agents.update(testAgentId, { tool_rules: newToolRules });
 
-    // Unlink Letta Code tools
+    // Unlink Fabric Code tools
     await unlinkToolsFromAgent(testAgentId);
 
     // Verify continue_loop rule is still there

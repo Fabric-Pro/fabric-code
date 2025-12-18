@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * Simplest possible example: Send an image to a Letta agent with streaming
+ * Simplest possible example: Send an image to an agent with streaming
  */
 
 import { readFileSync } from "node:fs";

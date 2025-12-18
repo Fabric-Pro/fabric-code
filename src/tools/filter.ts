@@ -64,7 +64,7 @@ class ToolFilterManager {
 
 // Use globalThis to ensure singleton across bundle
 // This prevents Bun's bundler from creating duplicate instances
-const FILTER_KEY = Symbol.for("@letta/toolFilter");
+const FILTER_KEY = Symbol.for("@fabric/toolFilter");
 
 type GlobalWithFilter = typeof globalThis & {
   [key: symbol]: ToolFilterManager;

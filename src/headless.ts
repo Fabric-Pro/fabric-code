@@ -205,7 +205,7 @@ export async function handleHeadlessCommand(
     agent = result.agent;
   }
 
-  // Priority 4: Try to resume from project settings (.letta/settings.local.json)
+  // Priority 4: Try to resume from project settings (.fabric/settings.local.json)
   if (!agent) {
     await settingsManager.loadLocalProjectSettings();
     const localProjectSettings = settingsManager.getLocalProjectSettings();

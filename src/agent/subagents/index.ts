@@ -3,7 +3,7 @@
  *
  * Built-in subagents are bundled with the package.
  * Users can also define custom subagents as Markdown files with YAML frontmatter
- * in the .letta/agents/ directory.
+ * in the .fabric/agents/ directory.
  */
 
 import { existsSync } from "node:fs";
@@ -66,14 +66,14 @@ export interface SubagentDiscoveryResult {
 /**
  * Directory for subagent files (relative to project root)
  */
-export const AGENTS_DIR = ".letta/agents";
+export const AGENTS_DIR = ".fabric/agents";
 
 /**
  * Global directory for subagent files (in user's home directory)
  */
 export const GLOBAL_AGENTS_DIR = join(
   process.env.HOME || process.env.USERPROFILE || "~",
-  ".letta/agents",
+  ".fabric/agents",
 );
 
 /**
@@ -316,7 +316,7 @@ async function discoverSubagentsFromDir(
 }
 
 /**
- * Discover subagents from global (~/.letta/agents) and project (.letta/agents) directories
+ * Discover subagents from global (~/.fabric/agents) and project (.fabric/agents) directories
  * Project-level subagents override global ones with the same name
  */
 export async function discoverSubagents(
@@ -326,7 +326,7 @@ export async function discoverSubagents(
   const subagents: SubagentConfig[] = [];
   const seenNames = new Set<string>();
 
-  // First, discover from global directory (~/.letta/agents)
+  // First, discover from global directory (~/.fabric/agents)
   await discoverSubagentsFromDir(
     GLOBAL_AGENTS_DIR,
     seenNames,
@@ -334,7 +334,7 @@ export async function discoverSubagents(
     errors,
   );
 
-  // Then, discover from project directory (.letta/agents)
+  // Then, discover from project directory (.fabric/agents)
   // Project-level overrides global with same name
   const projectAgentsDir = join(workingDirectory, AGENTS_DIR);
   await discoverSubagentsFromDir(
@@ -349,7 +349,7 @@ export async function discoverSubagents(
 
 /**
  * Get all subagent configurations
- * Includes built-in subagents and any user-defined ones from .letta/agents/
+ * Includes built-in subagents and any user-defined ones from .fabric/agents/
  * User-defined subagents override built-ins with the same name
  * Results are cached per working directory
  */
@@ -364,7 +364,7 @@ export async function getAllSubagentConfigs(
   // Start with a copy of built-in subagents (don't mutate the cache)
   const configs: Record<string, SubagentConfig> = { ...getBuiltinSubagents() };
 
-  // Discover user-defined subagents from .letta/agents/
+  // Discover user-defined subagents from .fabric/agents/
   const { subagents, errors } = await discoverSubagents(workingDirectory);
 
   // Log any discovery errors

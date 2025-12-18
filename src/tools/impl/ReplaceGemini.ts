@@ -1,5 +1,5 @@
 /**
- * Gemini CLI replace tool - wrapper around Letta Code's Edit tool
+ * Gemini CLI replace tool - wrapper around Fabric Code's Edit tool
  * Uses Gemini's exact schema and description
  */
 
@@ -15,9 +15,9 @@ interface ReplaceGeminiArgs {
 export async function replace(
   args: ReplaceGeminiArgs,
 ): Promise<{ message: string }> {
-  // Adapt Gemini params to Letta Code's Edit tool
-  // Gemini uses expected_replacements, Letta Code uses replace_all
-  const lettaArgs = {
+  // Adapt Gemini params to Fabric Code's Edit tool
+  // Gemini uses expected_replacements, Fabric Code uses replace_all
+  const fabricArgs = {
     file_path: args.file_path,
     old_string: args.old_string,
     new_string: args.new_string,
@@ -26,7 +26,7 @@ export async function replace(
     ),
   };
 
-  const result = await edit(lettaArgs);
+  const result = await edit(fabricArgs);
 
   // Edit returns { message: string, replacements: number }
   return { message: result.message };

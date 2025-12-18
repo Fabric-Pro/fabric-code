@@ -73,17 +73,17 @@ jobs:
         run: bun run build
 
       - name: CLI help smoke test
-        run: ./letta.js --help
+        run: ./fabric.js --help
 
       - name: CLI version smoke test
-        run: ./letta.js --version || true
+        run: ./fabric.js --version || true
 
       - name: Bundle size check
         run: |
           if [ "$RUNNER_OS" = "Windows" ]; then
-            SIZE=$(powershell -command "(Get-Item letta.js).length")
+            SIZE=$(powershell -command "(Get-Item fabric.js).length")
           else
-            SIZE=$(stat -f%z ./letta.js 2>/dev/null || stat -c%s ./letta.js 2>/dev/null)
+            SIZE=$(stat -f%z ./fabric.js 2>/dev/null || stat -c%s ./fabric.js 2>/dev/null)
           fi
           SIZE_MB=$((SIZE / 1024 / 1024))
           echo "Bundle size: $SIZE bytes (~${SIZE_MB}MB)"
@@ -99,7 +99,7 @@ jobs:
         if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
         env:
           LETTA_API_KEY: ${{ secrets.LETTA_API_KEY }}
-        run: ./letta.js --prompt "ping" --tools "" --permission-mode plan
+        run: ./fabric.js --prompt "ping" --tools "" --permission-mode plan
 
       - name: Publish dry-run
         if: ${{ github.event_name == 'push' }}

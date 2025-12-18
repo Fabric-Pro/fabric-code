@@ -7,7 +7,7 @@ import type {
   OpenAIModelSettings,
 } from "@letta-ai/letta-client/resources/agents/agents";
 import type { LlmConfig } from "@letta-ai/letta-client/resources/models/models";
-import { getAllLettaToolNames, getToolNames } from "../tools/manager";
+import { getAllFabricToolNames, getToolNames } from "../tools/manager";
 import { getClient } from "./client";
 
 type ModelSettings =
@@ -156,7 +156,7 @@ export interface UnlinkResult {
 }
 
 /**
- * Attach all Letta Code tools to an agent.
+ * Attach all Fabric Code tools to an agent.
  *
  * @param agentId - The agent ID
  * @returns Result with success status and message
@@ -179,13 +179,13 @@ export async function linkToolsToAgent(agentId: string): Promise<LinkResult> {
         .filter((name): name is string => typeof name === "string"),
     );
 
-    // Get Letta Code tool names (internal names from registry)
+    // Get Fabric Code tool names (internal names from registry)
     const { getServerToolName } = await import("../tools/manager");
-    const lettaCodeToolNames = getToolNames();
+    const fabricCodeToolNames = getToolNames();
 
     // Find tools to add (tools that aren't already attached)
     // Compare using server names since that's what the agent has
-    const toolsToAdd = lettaCodeToolNames.filter((internalName) => {
+    const toolsToAdd = fabricCodeToolNames.filter((internalName) => {
       const serverName = getServerToolName(internalName);
       return !currentToolNames.has(serverName);
     });
@@ -193,7 +193,7 @@ export async function linkToolsToAgent(agentId: string): Promise<LinkResult> {
     if (toolsToAdd.length === 0) {
       return {
         success: true,
-        message: "All Letta Code tools already attached",
+        message: "All Fabric Code tools already attached",
         addedCount: 0,
       };
     }
@@ -214,7 +214,7 @@ export async function linkToolsToAgent(agentId: string): Promise<LinkResult> {
     const newToolIds = [...currentToolIds, ...toolsToAddIds];
 
     // Get current tool_rules and add requires_approval rules for new tools
-    // ALL Letta Code tools need requires_approval to be routed to the client
+    // ALL Fabric Code tools need requires_approval to be routed to the client
     const currentToolRules = agent.tool_rules || [];
     const newToolRules = [
       ...currentToolRules,
@@ -232,7 +232,7 @@ export async function linkToolsToAgent(agentId: string): Promise<LinkResult> {
 
     return {
       success: true,
-      message: `Attached ${toolsToAddIds.length} Letta Code tool(s) to agent`,
+      message: `Attached ${toolsToAddIds.length} Fabric Code tool(s) to agent`,
       addedCount: toolsToAddIds.length,
     };
   } catch (error) {
@@ -244,7 +244,7 @@ export async function linkToolsToAgent(agentId: string): Promise<LinkResult> {
 }
 
 /**
- * Remove all Letta Code tools from an agent.
+ * Remove all Fabric Code tools from an agent.
  *
  * @param agentId - The agent ID
  * @returns Result with success status and message
@@ -261,17 +261,17 @@ export async function unlinkToolsFromAgent(
     });
     const allTools = agent.tools || [];
 
-    // Get all possible Letta Code tool names (both internal and server names)
+    // Get all possible Fabric Code tool names (both internal and server names)
     const { getServerToolName } = await import("../tools/manager");
-    const lettaCodeToolNames = new Set(getAllLettaToolNames());
-    const lettaCodeServerNames = new Set(
-      Array.from(lettaCodeToolNames).map((name) => getServerToolName(name)),
+    const fabricCodeToolNames = new Set(getAllFabricToolNames());
+    const fabricCodeServerNames = new Set(
+      Array.from(fabricCodeToolNames).map((name) => getServerToolName(name)),
     );
 
-    // Filter out Letta Code tools, keep everything else
+    // Filter out Fabric Code tools, keep everything else
     // Check against server names since that's what the agent sees
     const remainingTools = allTools.filter(
-      (t) => t.name && !lettaCodeServerNames.has(t.name),
+      (t) => t.name && !fabricCodeServerNames.has(t.name),
     );
     const removedCount = allTools.length - remainingTools.length;
 
@@ -280,13 +280,13 @@ export async function unlinkToolsFromAgent(
       .map((t) => t.id)
       .filter((id): id is string => typeof id === "string");
 
-    // Remove approval rules for Letta Code tools being unlinked
+    // Remove approval rules for Fabric Code tools being unlinked
     // Check against server names since that's what appears in tool_rules
     const currentToolRules = agent.tool_rules || [];
     const remainingToolRules = currentToolRules.filter(
       (rule) =>
         rule.type !== "requires_approval" ||
-        !lettaCodeServerNames.has(rule.tool_name),
+        !fabricCodeServerNames.has(rule.tool_name),
     );
 
     await client.agents.update(agentId, {
@@ -296,7 +296,7 @@ export async function unlinkToolsFromAgent(
 
     return {
       success: true,
-      message: `Removed ${removedCount} Letta Code tool(s) from agent`,
+      message: `Removed ${removedCount} Fabric Code tool(s) from agent`,
       removedCount,
     };
   } catch (error) {

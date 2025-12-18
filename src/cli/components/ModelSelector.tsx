@@ -204,7 +204,7 @@ export function ModelSelector({
       {!isLoading && visibleModels.length === 0 && (
         <Box>
           <Text color="red">
-            No models available. Please check your Letta configuration.
+            No models available. Please check your configuration.
           </Text>
         </Box>
       )}

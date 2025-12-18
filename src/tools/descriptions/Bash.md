@@ -72,9 +72,9 @@ Git Safety Protocol:
 3. You can call multiple tools in a single response. When multiple independent pieces of information are requested and all commands are likely to succeed, run multiple tool calls in parallel for optimal performance. run the following commands:
    - Add relevant untracked files to the staging area.
    - Create the commit with a message ending with:
-   👾 Generated with [Letta Code](https://letta.com)
+   👾 Generated with [Fabric Code](https://github.com/Fabric-Pro/fabric-code)
 
-   Co-Authored-By: Letta <noreply@letta.com>
+   Co-Authored-By: Fabric Code <noreply@techfabric.com>
    - Run git status after the commit completes to verify success.
    Note: git status depends on the commit completing, so run it sequentially after the commit.
 4. If the commit fails due to pre-commit hook changes, retry ONCE. If it succeeds but files were modified by the hook, verify it's safe to amend:
@@ -93,9 +93,9 @@ Important notes:
 git commit -m "$(cat <<'EOF'
    Commit message here.
 
-   👾 Generated with [Letta Code](https://letta.com)
+   👾 Generated with [Fabric Code](https://github.com/Fabric-Pro/fabric-code)
 
-   Co-Authored-By: Letta <noreply@letta.com>
+   Co-Authored-By: Fabric Code <noreply@techfabric.com>
    EOF
    )"
 </example>
@@ -123,7 +123,7 @@ gh pr create --title "the pr title" --body "$(cat <<'EOF'
 ## Test plan
 [Bulleted markdown checklist of TODOs for testing the pull request...]
 
-👾 Generated with [Letta Code](https://letta.com)
+👾 Generated with [Fabric Code](https://github.com/Fabric-Pro/fabric-code)
 EOF
 )"
 </example>

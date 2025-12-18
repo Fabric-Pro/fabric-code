@@ -15,9 +15,9 @@ type SettingsFile = {
  * Load permissions from all settings files and merge them hierarchically.
  *
  * Precedence (highest to lowest):
- * 1. Local project settings (.letta/settings.local.json)
- * 2. Project settings (.letta/settings.json)
- * 3. User settings (~/.letta/settings.json)
+ * 1. Local project settings (.fabric/settings.local.json)
+ * 2. Project settings (.fabric/settings.json)
+ * 3. User settings (~/.fabric/settings.json)
  *
  * Rules are merged by concatenating arrays (more specific settings add to broader ones)
  */
@@ -33,9 +33,9 @@ export async function loadPermissions(
 
   // Load in reverse precedence order (lowest to highest)
   const sources = [
-    join(homedir(), ".letta", "settings.json"), // User
-    join(workingDirectory, ".letta", "settings.json"), // Project
-    join(workingDirectory, ".letta", "settings.local.json"), // Local
+    join(homedir(), ".fabric", "settings.json"), // User
+    join(workingDirectory, ".fabric", "settings.json"), // Project
+    join(workingDirectory, ".fabric", "settings.local.json"), // Local
   ];
 
   for (const settingsPath of sources) {
@@ -93,13 +93,13 @@ export async function savePermissionRule(
   let settingsPath: string;
   switch (scope) {
     case "user":
-      settingsPath = join(homedir(), ".letta", "settings.json");
+      settingsPath = join(homedir(), ".fabric", "settings.json");
       break;
     case "project":
-      settingsPath = join(workingDirectory, ".letta", "settings.json");
+      settingsPath = join(workingDirectory, ".fabric", "settings.json");
       break;
     case "local":
-      settingsPath = join(workingDirectory, ".letta", "settings.local.json");
+      settingsPath = join(workingDirectory, ".fabric", "settings.local.json");
       break;
   }
 
@@ -130,20 +130,20 @@ export async function savePermissionRule(
   // Save settings
   await writeFile(settingsPath, JSON.stringify(settings, null, 2));
 
-  // If saving to .letta/settings.local.json, ensure it's gitignored
+  // If saving to .fabric/settings.local.json, ensure it's gitignored
   if (scope === "local") {
     await ensureLocalSettingsIgnored(workingDirectory);
   }
 }
 
 /**
- * Ensure .letta/settings.local.json is in .gitignore
+ * Ensure .fabric/settings.local.json is in .gitignore
  */
 async function ensureLocalSettingsIgnored(
   workingDirectory: string,
 ): Promise<void> {
   const gitignorePath = join(workingDirectory, ".gitignore");
-  const pattern = ".letta/settings.local.json";
+  const pattern = ".fabric/settings.local.json";
 
   try {
     let content = "";

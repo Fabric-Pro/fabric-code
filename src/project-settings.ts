@@ -1,5 +1,5 @@
 // src/project-settings.ts
-// Manages project-level settings stored in ./.letta/settings.json
+// Manages project-level settings stored in ./.fabric/settings.json
 
 import { join } from "node:path";
 import { exists, readFile, writeFile } from "./utils/fs.js";
@@ -18,11 +18,11 @@ type RawProjectSettings = {
 };
 
 function getProjectSettingsPath(workingDirectory: string): string {
-  return join(workingDirectory, ".letta", "settings.json");
+  return join(workingDirectory, ".fabric", "settings.json");
 }
 
 /**
- * Load project settings from ./.letta/settings.json
+ * Load project settings from ./.fabric/settings.json
  * If the file doesn't exist or doesn't have localSharedBlockIds, returns defaults
  */
 export async function loadProjectSettings(
@@ -49,7 +49,7 @@ export async function loadProjectSettings(
 }
 
 /**
- * Save project settings to ./.letta/settings.json
+ * Save project settings to ./.fabric/settings.json
  * Merges with existing settings (like permissions) instead of overwriting
  */
 export async function saveProjectSettings(

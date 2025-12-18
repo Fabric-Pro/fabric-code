@@ -11,7 +11,7 @@ export class TestDirectory {
   public readonly path: string;
 
   constructor() {
-    this.path = mkdtempSync(join(tmpdir(), "letta-test-"));
+    this.path = mkdtempSync(join(tmpdir(), "fabric-test-"));
   }
 
   /**

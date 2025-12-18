@@ -1,21 +1,21 @@
 {
-  "name": "@letta-ai/letta-code",
+  "name": "@fabric-pro/fabric-code",
   "version": "0.6.3",
-  "description": "Letta Code is a CLI tool for interacting with stateful Letta agents from the terminal.",
+  "description": "Fabric Code is a CLI tool for interacting with stateful agents powered by Letta memory from the terminal.",
   "type": "module",
   "bin": {
-    "letta": "letta.js"
+    "fabric": "fabric.js"
   },
   "files": [
     "LICENSE",
     "README.md",
-    "letta.js",
+    "fabric.js",
     "scripts",
     "vendor"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/letta-ai/letta-code.git"
+    "url": "https://github.com/Fabric-Pro/fabric-code.git"
   },
   "license": "Apache-2.0",
   "publishConfig": {

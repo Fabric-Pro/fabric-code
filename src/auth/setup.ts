@@ -1,5 +1,5 @@
 /**
- * Setup flow handler - can be triggered via `letta setup` or automatically on first run
+ * Setup flow handler - can be triggered via `fabric setup` or automatically on first run
  */
 
 import { render } from "ink";

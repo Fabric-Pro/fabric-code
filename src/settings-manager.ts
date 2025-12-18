@@ -221,7 +221,7 @@ class SettingsManager {
 
     const settingsPath = this.getSettingsPath();
     const home = process.env.HOME || homedir();
-    const dirPath = join(home, ".letta");
+    const dirPath = join(home, ".fabric");
 
     try {
       if (!exists(dirPath)) {
@@ -244,7 +244,7 @@ class SettingsManager {
     if (!settings) return;
 
     const settingsPath = this.getProjectSettingsPath(workingDirectory);
-    const dirPath = join(workingDirectory, ".letta");
+    const dirPath = join(workingDirectory, ".fabric");
 
     try {
       // Read existing settings (might have permissions, etc.)
@@ -275,19 +275,19 @@ class SettingsManager {
   private getSettingsPath(): string {
     // Respect process.env.HOME for testing (homedir() ignores it)
     const home = process.env.HOME || homedir();
-    return join(home, ".letta", "settings.json");
+    return join(home, ".fabric", "settings.json");
   }
 
   private getProjectSettingsPath(workingDirectory: string): string {
-    return join(workingDirectory, ".letta", "settings.json");
+    return join(workingDirectory, ".fabric", "settings.json");
   }
 
   private getLocalProjectSettingsPath(workingDirectory: string): string {
-    return join(workingDirectory, ".letta", "settings.local.json");
+    return join(workingDirectory, ".fabric", "settings.local.json");
   }
 
   /**
-   * Load local project settings (.letta/settings.local.json)
+   * Load local project settings (.fabric/settings.local.json)
    */
   async loadLocalProjectSettings(
     workingDirectory: string = process.cwd(),
@@ -376,7 +376,7 @@ class SettingsManager {
     if (!settings) return;
 
     const settingsPath = this.getLocalProjectSettingsPath(workingDirectory);
-    const dirPath = join(workingDirectory, ".letta");
+    const dirPath = join(workingDirectory, ".fabric");
 
     try {
       // Create directory if needed
@@ -396,7 +396,7 @@ class SettingsManager {
   // =====================================================================
 
   /**
-   * Get globally pinned agent IDs from ~/.letta/settings.json
+   * Get globally pinned agent IDs from ~/.fabric/settings.json
    * Migrates from old profiles format if needed.
    */
   getGlobalPinnedAgents(): string[] {
@@ -411,7 +411,7 @@ class SettingsManager {
   }
 
   /**
-   * Get locally pinned agent IDs from .letta/settings.local.json
+   * Get locally pinned agent IDs from .fabric/settings.local.json
    * Migrates from old profiles format if needed.
    */
   getLocalPinnedAgents(workingDirectory: string = process.cwd()): string[] {
@@ -590,10 +590,10 @@ class SettingsManager {
   }
 
   /**
-   * Check if local .letta directory exists (indicates existing project)
+   * Check if local .fabric directory exists (indicates existing project)
    */
-  hasLocalLettaDir(workingDirectory: string = process.cwd()): boolean {
-    const dirPath = join(workingDirectory, ".letta");
+  hasLocalFabricDir(workingDirectory: string = process.cwd()): boolean {
+    const dirPath = join(workingDirectory, ".fabric");
     return exists(dirPath);
   }
 
@@ -623,11 +623,11 @@ class SettingsManager {
 
 // Singleton instance - use globalThis to ensure only one instance across the entire bundle
 declare global {
-  var __lettaSettingsManager: SettingsManager | undefined;
+  var __fabricSettingsManager: SettingsManager | undefined;
 }
 
-if (!globalThis.__lettaSettingsManager) {
-  globalThis.__lettaSettingsManager = new SettingsManager();
+if (!globalThis.__fabricSettingsManager) {
+  globalThis.__fabricSettingsManager = new SettingsManager();
 }
 
-export const settingsManager = globalThis.__lettaSettingsManager;
+export const settingsManager = globalThis.__fabricSettingsManager;

@@ -8,7 +8,7 @@ let testDir: string;
 
 beforeEach(async () => {
   // Create a temporary test directory for project files
-  testDir = await mkdtemp(join(tmpdir(), "letta-test-"));
+  testDir = await mkdtemp(join(tmpdir(), "fabric-test-"));
 });
 
 afterEach(async () => {
@@ -24,7 +24,7 @@ test("Load permissions from empty directory returns rules from user settings", a
   const projectDir = join(testDir, "empty-project");
   const permissions = await loadPermissions(projectDir);
 
-  // Will include user settings from real ~/.letta/settings.json if it exists
+  // Will include user settings from real ~/.fabric/settings.json if it exists
   // So we just verify the structure is correct
   expect(Array.isArray(permissions.allow)).toBe(true);
   expect(Array.isArray(permissions.deny)).toBe(true);
@@ -36,7 +36,7 @@ test("Load permissions from empty directory returns rules from user settings", a
 
 test("Load permissions from project settings", async () => {
   const projectDir = join(testDir, "project-1");
-  const projectSettingsPath = join(projectDir, ".letta", "settings.json");
+  const projectSettingsPath = join(projectDir, ".fabric", "settings.json");
   await Bun.write(
     projectSettingsPath,
     JSON.stringify({
@@ -54,7 +54,7 @@ test("Load permissions from project settings", async () => {
 
 test("Load permissions from local settings", async () => {
   const projectDir = join(testDir, "project-2");
-  const localSettingsPath = join(projectDir, ".letta", "settings.local.json");
+  const localSettingsPath = join(projectDir, ".fabric", "settings.local.json");
   await Bun.write(
     localSettingsPath,
     JSON.stringify({
@@ -79,7 +79,7 @@ test("Local settings merge with project settings", async () => {
 
   // Project settings
   await Bun.write(
-    join(projectDir, ".letta", "settings.json"),
+    join(projectDir, ".fabric", "settings.json"),
     JSON.stringify({
       permissions: {
         allow: ["Bash(cat:*)"],
@@ -89,7 +89,7 @@ test("Local settings merge with project settings", async () => {
 
   // Local settings
   await Bun.write(
-    join(projectDir, ".letta", "settings.local.json"),
+    join(projectDir, ".fabric", "settings.local.json"),
     JSON.stringify({
       permissions: {
         allow: ["Bash(git push:*)"],
@@ -109,7 +109,7 @@ test("Settings merge deny rules from multiple sources", async () => {
 
   // Project settings
   await Bun.write(
-    join(projectDir, ".letta", "settings.json"),
+    join(projectDir, ".fabric", "settings.json"),
     JSON.stringify({
       permissions: {
         deny: ["Read(.env)"],
@@ -119,7 +119,7 @@ test("Settings merge deny rules from multiple sources", async () => {
 
   // Local settings
   await Bun.write(
-    join(projectDir, ".letta", "settings.local.json"),
+    join(projectDir, ".fabric", "settings.local.json"),
     JSON.stringify({
       permissions: {
         deny: ["Read(secrets/**)"],
@@ -139,7 +139,7 @@ test("Settings merge additionalDirectories", async () => {
 
   // Project settings
   await Bun.write(
-    join(projectDir, ".letta", "settings.json"),
+    join(projectDir, ".fabric", "settings.json"),
     JSON.stringify({
       permissions: {
         additionalDirectories: ["../docs"],
@@ -149,7 +149,7 @@ test("Settings merge additionalDirectories", async () => {
 
   // Local settings
   await Bun.write(
-    join(projectDir, ".letta", "settings.local.json"),
+    join(projectDir, ".fabric", "settings.local.json"),
     JSON.stringify({
       permissions: {
         additionalDirectories: ["../shared"],
@@ -179,7 +179,7 @@ test("Save permission to project settings", async () => {
     projectDir,
   );
 
-  const projectSettingsPath = join(projectDir, ".letta", "settings.json");
+  const projectSettingsPath = join(projectDir, ".fabric", "settings.json");
   const file = Bun.file(projectSettingsPath);
   const settings = await file.json();
 
@@ -190,7 +190,7 @@ test("Save permission to local settings", async () => {
   const projectDir = join(testDir, "project");
   await savePermissionRule("Bash(git push:*)", "allow", "local", projectDir);
 
-  const localSettingsPath = join(projectDir, ".letta", "settings.local.json");
+  const localSettingsPath = join(projectDir, ".fabric", "settings.local.json");
   const file = Bun.file(localSettingsPath);
   const settings = await file.json();
 
@@ -201,7 +201,7 @@ test("Save permission to deny list", async () => {
   const projectDir = join(testDir, "project");
   await savePermissionRule("Read(.env)", "deny", "project", projectDir);
 
-  const settingsPath = join(projectDir, ".letta", "settings.json");
+  const settingsPath = join(projectDir, ".fabric", "settings.json");
   const file = Bun.file(settingsPath);
   const settings = await file.json();
 
@@ -213,7 +213,7 @@ test("Save permission doesn't create duplicates", async () => {
   await savePermissionRule("Bash(ls:*)", "allow", "project", projectDir);
   await savePermissionRule("Bash(ls:*)", "allow", "project", projectDir);
 
-  const settingsPath = join(projectDir, ".letta", "settings.json");
+  const settingsPath = join(projectDir, ".fabric", "settings.json");
   const file = Bun.file(settingsPath);
   const settings = await file.json();
 
@@ -226,7 +226,7 @@ test("Save permission preserves existing rules", async () => {
   const projectDir = join(testDir, "project");
 
   // Create initial settings
-  const settingsPath = join(projectDir, ".letta", "settings.json");
+  const settingsPath = join(projectDir, ".fabric", "settings.json");
   await Bun.write(
     settingsPath,
     JSON.stringify({
@@ -251,7 +251,7 @@ test("Save permission preserves other settings fields", async () => {
   const projectDir = join(testDir, "project");
 
   // Create settings with other fields
-  const settingsPath = join(projectDir, ".letta", "settings.json");
+  const settingsPath = join(projectDir, ".fabric", "settings.json");
   await Bun.write(
     settingsPath,
     JSON.stringify({
@@ -279,7 +279,7 @@ test("Save permission preserves other settings fields", async () => {
 
 test("Load permissions handles invalid JSON gracefully", async () => {
   const projectDir = join(testDir, "project-invalid-json");
-  const settingsPath = join(projectDir, ".letta", "settings.json");
+  const settingsPath = join(projectDir, ".fabric", "settings.json");
 
   // Write invalid JSON
   await Bun.write(settingsPath, "{ invalid json ");
@@ -293,7 +293,7 @@ test("Load permissions handles invalid JSON gracefully", async () => {
 
 test("Load permissions handles missing permissions field", async () => {
   const projectDir = join(testDir, "project-no-perms");
-  const settingsPath = join(projectDir, ".letta", "settings.json");
+  const settingsPath = join(projectDir, ".fabric", "settings.json");
 
   await Bun.write(
     settingsPath,
@@ -314,7 +314,7 @@ test("Save permission creates parent directories", async () => {
   const deepPath = join(testDir, "deep", "nested", "project");
   await savePermissionRule("Bash(ls:*)", "allow", "project", deepPath);
 
-  const settingsPath = join(deepPath, ".letta", "settings.json");
+  const settingsPath = join(deepPath, ".fabric", "settings.json");
   const file = Bun.file(settingsPath);
 
   expect(await file.exists()).toBe(true);
@@ -335,7 +335,7 @@ test("Saving local settings updates .gitignore", async () => {
   const gitignoreFile = Bun.file(join(projectDir, ".gitignore"));
   const content = await gitignoreFile.text();
 
-  expect(content).toContain(".letta/settings.local.json");
+  expect(content).toContain(".fabric/settings.local.json");
   expect(content).toContain("node_modules"); // Preserves existing content
 });
 
@@ -344,7 +344,7 @@ test("Saving local settings doesn't duplicate .gitignore entry", async () => {
 
   await Bun.write(
     join(projectDir, ".gitignore"),
-    "node_modules\n.letta/settings.local.json\n",
+    "node_modules\n.fabric/settings.local.json\n",
   );
 
   await savePermissionRule("Bash(ls:*)", "allow", "local", projectDir);
@@ -352,7 +352,7 @@ test("Saving local settings doesn't duplicate .gitignore entry", async () => {
   const gitignoreFile = Bun.file(join(projectDir, ".gitignore"));
   const content = await gitignoreFile.text();
 
-  const matches = content.match(/\.letta\/settings\.local\.json/g);
+  const matches = content.match(/\.fabric\/settings\.local\.json/g);
   expect(matches).toHaveLength(1);
 });
 
@@ -366,5 +366,5 @@ test("Saving local settings creates .gitignore if missing", async () => {
   expect(await gitignoreFile.exists()).toBe(true);
 
   const content = await gitignoreFile.text();
-  expect(content).toContain(".letta/settings.local.json");
+  expect(content).toContain(".fabric/settings.local.json");
 });

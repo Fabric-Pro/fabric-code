@@ -2,7 +2,7 @@
  * Subagent manager for spawning and coordinating subagents
  *
  * This module handles:
- * - Spawning subagents via letta CLI in headless mode
+ * - Spawning subagents via fabric CLI in headless mode
  * - Executing subagents and collecting final reports
  * - Managing parallel subagent execution
  */
@@ -319,7 +319,7 @@ function buildSubagentArgs(
 }
 
 /**
- * Execute a subagent and collect its final report by spawning letta in headless mode
+ * Execute a subagent and collect its final report by spawning fabric in headless mode
  */
 async function executeSubagent(
   type: string,
@@ -332,8 +332,8 @@ async function executeSubagent(
   try {
     const cliArgs = buildSubagentArgs(type, config, model, userPrompt);
 
-    // Spawn letta in headless mode with stream-json output
-    const proc = spawn("letta", cliArgs, {
+    // Spawn fabric in headless mode with stream-json output
+    const proc = spawn("fabric", cliArgs, {
       cwd: process.cwd(),
       env: process.env,
     });

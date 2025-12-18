@@ -443,7 +443,7 @@ export const ApprovalDialog = memo(function ApprovalDialog({
     const denyLabel =
       progress && progress.total > 1
         ? "No, deny this tool (esc)"
-        : "No, and tell Letta what to do differently (esc)";
+        : "No, and tell the agent what to do differently (esc)";
     opts.push({
       label: denyLabel,
       action: () => {}, // Handled separately via setIsEnteringReason
@@ -582,7 +582,7 @@ export const ApprovalDialog = memo(function ApprovalDialog({
           flexDirection="column"
           paddingX={1}
         >
-          <Text bold>What should Letta do differently? (esc to cancel):</Text>
+          <Text bold>What should the agent do differently? (esc to cancel):</Text>
           <Box height={1} />
           <Box>
             <Text dimColor>{"> "}</Text>

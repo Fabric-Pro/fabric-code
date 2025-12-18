@@ -92,7 +92,7 @@ export function ResumeSelector({
 
       const agentList = await client.agents.list({
         limit: FETCH_PAGE_SIZE,
-        tags: ["origin:letta-code"],
+        tags: ["origin:fabric-code"],
         include: ["agent.blocks"],
         order: "desc",
         order_by: "last_run_completion",

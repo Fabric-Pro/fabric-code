@@ -14,8 +14,8 @@ beforeEach(async () => {
   await settingsManager.reset();
 
   // Create temporary directories for testing
-  testHomeDir = await mkdtemp(join(tmpdir(), "letta-test-home-"));
-  testProjectDir = await mkdtemp(join(tmpdir(), "letta-test-project-"));
+  testHomeDir = await mkdtemp(join(tmpdir(), "fabric-test-home-"));
+  testProjectDir = await mkdtemp(join(tmpdir(), "fabric-test-project-"));
 
   // Override HOME for tests (must be done BEFORE initialize is called)
   process.env.HOME = testHomeDir;
@@ -202,7 +202,7 @@ describe("Settings Manager - Global Settings", () => {
 });
 
 // ============================================================================
-// Project Settings Tests (.letta/settings.json)
+// Project Settings Tests (.fabric/settings.json)
 // ============================================================================
 
 describe("Settings Manager - Project Settings", () => {
@@ -280,7 +280,7 @@ describe("Settings Manager - Project Settings", () => {
 });
 
 // ============================================================================
-// Local Project Settings Tests (.letta/settings.local.json)
+// Local Project Settings Tests (.fabric/settings.local.json)
 // ============================================================================
 
 describe("Settings Manager - Local Project Settings", () => {
@@ -381,7 +381,7 @@ describe("Settings Manager - Multiple Projects", () => {
 
   beforeEach(async () => {
     await settingsManager.initialize();
-    testProjectDir2 = await mkdtemp(join(tmpdir(), "letta-test-project2-"));
+    testProjectDir2 = await mkdtemp(join(tmpdir(), "fabric-test-project2-"));
   });
 
   afterEach(async () => {
@@ -470,7 +470,7 @@ describe("Settings Manager - Edge Cases", () => {
   test("Handles corrupted settings file gracefully", async () => {
     // Create corrupted settings file
     const { writeFile, mkdir } = await import("../utils/fs.js");
-    const settingsDir = join(testHomeDir, ".letta");
+    const settingsDir = join(testHomeDir, ".fabric");
     await mkdir(settingsDir, { recursive: true });
     await writeFile(join(settingsDir, "settings.json"), "{ invalid json");
 

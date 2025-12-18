@@ -20,7 +20,7 @@ type ReasoningLine = {
 
 /**
  * ReasoningMessageRich - Rich formatting version with special reasoning layout
- * This is a direct port from the old letta-code codebase to preserve the exact styling
+ * This is a direct port from the old fabric-code codebase to preserve the exact styling
  *
  * Features:
  * - Header row with "✻" symbol and "Thinking…" text
